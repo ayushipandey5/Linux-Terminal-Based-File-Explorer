@@ -12,8 +12,8 @@
 using namespace std;
 
 
-char * root;
+extern char * root;
 
  void openDirectory(char * path);
  int countFiles(char * path);
- void display(char * path);
+ void display(char * filePath,char * fileName);
