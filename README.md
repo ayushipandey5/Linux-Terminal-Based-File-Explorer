@@ -1,1 +1,1 @@
-# LInux-Terminal-Based-File-Explorer
+# Linux-Terminal-Based-File-Explorer
