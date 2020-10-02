@@ -1,7 +1,7 @@
 #include "header.h"
 
-vector<string> fileArr;
 int totalFiles;
+vector<string> fileArr;
 
 void openDirectory(char * path){
     // struct dirent *de;
@@ -11,7 +11,8 @@ void openDirectory(char * path){
     }
     else{
         totalFiles = countFiles(path);
-        cout<<totalFiles<<"\n";
+        printf("\033[H\033[J");
+	    printf("%c[%d;%dH", 27, 1, 1);
         for(int i=0;i<totalFiles;i++){
             int size = fileArr[i].length() + 1;
             char * fileName = new char[size];
@@ -87,11 +88,11 @@ void display(char * filePath,char * fileName){
 	printf("\t%s", tt);
 	if(S_ISDIR(buf.st_mode))
 	{
-		printf("\033[1;32m");
-		printf("\t%-20s\n", fileName);
+		printf("\033[1;36m");
+		printf("\t%s\n", fileName);
 		printf("\033[0m");
 	}
 	else
-		printf("\t%-20s\n", fileName);
+		printf("\t%s\n", fileName);
 
 }
