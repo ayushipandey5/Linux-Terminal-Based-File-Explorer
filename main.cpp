@@ -12,6 +12,11 @@ int main(int argc,char *argv[]){
 		openDirectory(".");
     }
 
+    else if(argc==2){
+
+    }
+
+    navigate();
 
 
     return 0;
