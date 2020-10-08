@@ -49,22 +49,25 @@ void listFiles(string file_name){
 		printf("\t%s\n", file_name);
 }
 
-void disDir(int low,int high,vector<string>DirectryList){	
+void disDir(int low, int high,vector<string>DirectryList){	
+    fflush(stdout);
+    tcdrain(STDOUT_FILENO);
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    int l = 0;
+    int h = w.ws_row - 2;
 	cout<<"\033c";//clear screen
 	char buffer[256];
 	string path = getcwd(buffer, 256);
 	cout<<path<<endl<<endl;
 	int i;
     sort(DirectryList.begin(),DirectryList.end());
-	if(DirectryList.size()<25)
-	high=DirectryList.size();
+	if(DirectryList.size()<h)
+	    high = DirectryList.size();
 	
-	for(i=low;i<high-1;i++)
-	{
-	
-	listFiles(DirectryList[i]);
-	cout<<endl;
-	
+	for(i=low;i<high-1;i++){
+	    listFiles(DirectryList[i]);
+	    cout<<endl;
 	}
 	listFiles(DirectryList[i]);
 	cout<<endl;
