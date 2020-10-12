@@ -146,3 +146,4 @@ int enter(int curr_ptr,vector<string>&DirectryList){
 	}
 	return curr_ptr;
 }
+
