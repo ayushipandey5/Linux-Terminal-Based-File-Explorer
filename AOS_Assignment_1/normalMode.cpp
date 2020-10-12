@@ -27,7 +27,7 @@ void normalMode(int *curr_ptr, vector<string>&dirList){
     newie=oldie;
     newie.c_lflag &= ~(ECHO | ICANON);
     tcsetattr(STDIN_FILENO,TCSAFLUSH,&newie);
-
+    cout<<"\033["<<3<<";1H"; 
     while(1){
         struct termios new_t;
         struct termios old;
@@ -72,6 +72,15 @@ void normalMode(int *curr_ptr, vector<string>&dirList){
         if(key == 10){
             *curr_ptr = enter(*curr_ptr,dirList);
         }
+
+        if(key == 58){	
+		    struct winsize w;
+			ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+			cout<<"\u001b["<<w.ws_row-3<<"B";
+			commandBuffer.clear();
+			cout<<"Enter Command:";
+            commandMode(curr_ptr,dirList);
+		}
 
         tcsetattr(STDIN_FILENO,TCSAFLUSH,&old);
     }
