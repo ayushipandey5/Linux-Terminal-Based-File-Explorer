@@ -47,3 +47,7 @@ string createDir(string src);
 void copyDir(string dir,string dest);
 string renameFiles(string src,string dest);
 string createfile(string src);
+string deletefile(string src);
+string delete_dir(string src);
+vector<string> searchFile(string dir,vector<string>&search1,string file);
+void displaySearchResult(int low,int high,vector<string>DirectryList);
