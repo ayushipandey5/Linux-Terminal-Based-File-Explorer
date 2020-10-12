@@ -4,11 +4,11 @@ string * root;
 
 string terminalMode="NORMAL";
 int main(int argc, char ** argv){
+    int curr_ptr=0;
     cout<<"\u001b[2J"; //clear screen
-    cout<<"\033[2;1H";
     vector<string>dirList;
     if(argc>=2){
-        string current=argv[1];
+        string current = argv[1];
         dirList = addDir(current);
         if(chdir(current.c_str())<0)
             cout<<"Error"<<endl;
@@ -23,7 +23,7 @@ int main(int argc, char ** argv){
         char pathBuff[200];
         string path = getcwd(pathBuff,200);
         *root = path;
-        //commandMode();
+        commandMode(&curr_ptr,dirList);
     }
     else if(argc < 2){   
         int low = 0 ;
@@ -38,8 +38,6 @@ int main(int argc, char ** argv){
             cout<<dirList[i]<<endl;
         }
         disDir(low,high,dirList);
-
-        int curr_ptr=0;
         normalMode(&curr_ptr,dirList);
     }
 
