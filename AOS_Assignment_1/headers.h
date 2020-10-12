@@ -22,14 +22,20 @@
 
 using namespace std;
 
-extern vector<string> dirList;
+extern string * root;
 extern vector<char>commandBuff;
-extern string root="";
-extern int low;
-extern int high;
 
-// int getkey();
-void normalMode(int *curr_ptr);
+
+void normalMode(int *curr_ptr,vector<string>&dirList);
+char getKey();
+int getWinRow();
 vector<string> addDir(string dir_name);
-void listFiles(string file_name);
+void listFiles(char * file_name);
 void disDir(int low,int high,vector<string>DirectryList);
+int up(int curr_ptr,vector<string>&DirectryList);
+int down(int curr_ptr,vector<string>&DirectryList);
+int left(int curr_ptr,vector<string>&DirectryList);
+int right(int curr_ptr,vector<string>&DirectryList);
+void home(string& home_path,vector<string>&DirectryList);
+void backspace(string home_path,vector<string>&DirectryList);
+int enter(int curr_ptr,vector<string>&DirectryList);
