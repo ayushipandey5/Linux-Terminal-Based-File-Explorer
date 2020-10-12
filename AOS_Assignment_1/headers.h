@@ -23,7 +23,7 @@
 using namespace std;
 
 extern string * root;
-extern vector<char>commandBuff;
+extern vector<char>commandBuffer;
 
 
 void normalMode(int *curr_ptr,vector<string>&dirList);
@@ -39,3 +39,6 @@ int right(int curr_ptr,vector<string>&DirectryList);
 void home(string& home_path,vector<string>&DirectryList);
 void backspace(string home_path,vector<string>&DirectryList);
 int enter(int curr_ptr,vector<string>&DirectryList);
+void commandMode(int * curr_ptr , vector<string> dirList);
+void setCommandModeStatus(vector<char>&commandBuffer,string mesg);
+string copy(string src, string dest);
