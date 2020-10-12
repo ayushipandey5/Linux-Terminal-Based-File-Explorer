@@ -1,21 +1,25 @@
 #include "headers.h"
 
-
 vector<string> addDir(string dir_name){
     struct dirent *de;           
     DIR * dir;
     vector<string>tempDirList;
 	dir=opendir(dir_name.c_str());
-	while((de=readdir(dir))!=NULL)
-	{	string filename((de->d_name));
+	while((de=readdir(dir)) != NULL)
+	{	string filename = de->d_name;
  		tempDirList.push_back(filename);
 	}
 	closedir(dir);
+	sort(tempDirList.begin(), tempDirList.end());
 	return tempDirList;
 }
 
-void listFiles(string file_name){
-    struct stat buf;
+void listFiles(char * file_name){
+	struct stat buf;
+	if (stat(file_name, &buf) == -1){
+            perror("lstat");
+	}
+	
     printf((S_ISDIR(buf.st_mode)) ? "d" : "-");
 	printf((buf.st_mode & S_IRUSR) ? "r" : "-");
 	printf((buf.st_mode & S_IWUSR) ? "w" : "-");
@@ -56,7 +60,7 @@ void disDir(int low, int high,vector<string>DirectryList){
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     int l = 0;
     int h = w.ws_row - 2;
-	cout<<"\033c";//clear screen
+	cout<<"\033c	";//clear screen
 	char buffer[256];
 	string path = getcwd(buffer, 256);
 	cout<<path<<endl<<endl;
@@ -66,11 +70,17 @@ void disDir(int low, int high,vector<string>DirectryList){
 	    high = DirectryList.size();
 	
 	for(i=low;i<high-1;i++){
-	    listFiles(DirectryList[i]);
-	    cout<<endl;
+		char * fileName = new char[100];
+		strcpy(fileName, DirectryList[i].c_str());
+		if(strcmp(fileName,".")==0){
+                listFiles(".");
+        }
+	    else
+			listFiles(fileName);
 	}
-	listFiles(DirectryList[i]);
-	cout<<endl;
+	char * fileName = new char[100];
+	strcpy(fileName, DirectryList[i].c_str());
+	listFiles(fileName);
 	if(high<22)
 	    cout<<"\u001b["<<high-low+2<<"A";
 	return;
