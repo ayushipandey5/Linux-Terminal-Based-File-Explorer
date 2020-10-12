@@ -42,3 +42,8 @@ int enter(int curr_ptr,vector<string>&DirectryList);
 void commandMode(int * curr_ptr , vector<string> dirList);
 void setCommandModeStatus(vector<char>&commandBuffer,string mesg);
 string copy(string src, string dest);
+string move(string src,string dest);
+string createDir(string src);
+void copyDir(string dir,string dest);
+string renameFiles(string src,string dest);
+string createfile(string src);
