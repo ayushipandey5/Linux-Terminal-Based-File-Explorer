@@ -54,13 +54,14 @@ void listFiles(char * file_name){
 }
 
 void disDir(int low, int high,vector<string>DirectryList){	
+	cout<<"\033["<<3<<";1H";
     fflush(stdout);
     tcdrain(STDOUT_FILENO);
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     int l = 0;
     int h = w.ws_row - 2;
-	cout<<"\033c	";//clear screen
+	cout<<"\033c";//clear screen
 	char buffer[256];
 	string path = getcwd(buffer, 256);
 	cout<<path<<endl<<endl;
