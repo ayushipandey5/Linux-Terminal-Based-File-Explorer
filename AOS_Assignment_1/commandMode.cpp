@@ -162,22 +162,95 @@ void commandMode(int * curr_ptr , vector<string> dirList){
 				}                
             }
 
-
-
-            
+			else if(tokens.size()==2)
+			{
+				string basePath; 
+                string msg;
+				/////////////delete file ////////////
+				if(tokens[0]=="delete_file")
+				{			
+					char buffer[256];
+					basePath = getcwd(buffer, 256);
+					string dest;
+                    string compSrc;
+					dest=tokens[1];
+                    compSrc=basePath+"/"+dest;
+                    msg = deletefile(compSrc);
+					setCommandModeStatus(commandBuffer,msg);
+				}
+				///////////delete dir///////////
+				else if(tokens[0]=="delete_dir")
+				{			
+					char buffer[256];
+					basePath = getcwd(buffer, 256);		
+                    string compSrc;
+					string dest=tokens[1];
+                    compSrc=basePath+"/"+dest;
+                    msg= delete_dir(compSrc);
+					setCommandModeStatus(commandBuffer,msg);
+				}	
+				///////////////goto//////////////////////
+				else if(tokens[0]=="goto")
+				{			
+    				char buffer[256];
+	    			basePath = getcwd(buffer, 256);			
+                    string compSrc;
+			    	string dest=tokens[1];
+                    compSrc = *root + "/" + dest;
+	    			msg="Directory Goto Successfully";
+		    		setCommandModeStatus(commandBuffer,msg);
+			    	cout<<compSrc;
+				    chdir(compSrc.c_str());
+    				dirList.clear();
+	    			dirList = addDir(compSrc);
+		    		int low=0;
+                    int high=25;
+				    disDir(low,high,dirList);
+    				cout<<"\033[3;1H";
+                    normalMode(curr_ptr , dirList);
+		    		break;
+				}	
+				////////////searching file/////////////////
+				else if(tokens[0]=="search")
+				{
+					string inputFil=tokens[1];
+					vector<string>searchResult;
+					char buffer[256];
+					basePath = getcwd(buffer, 256);			
+					string path=basePath;
+					searchResult=searchFile(*root,searchResult,inputFil);
+					if(searchResult.size()==0)
+					{
+						msg="File not Found";
+					}
+					else
+					{
+						for (int i=0;i<searchResult.size();i++)
+						{
+							msg+=searchResult[i]+" "+"Found";
+						}
+							displaySearchResult(0,searchResult.size(),searchResult );
+							cout<<"\033[3;1H";
+							chdir(basePath.c_str());
+							dirList=searchResult;
+                            normalMode(curr_ptr,dirList);
+							break;			
+					} 
+					chdir(basePath.c_str());
+					setCommandModeStatus(commandBuffer,msg);
+				}
+				else 
+				{
+					msg="command not found";
+					setCommandModeStatus(commandBuffer,msg);
+				}
+            }
         }
-
-
-
-
-
-
-
-        // //backspace
-		// else if(key==127){
-		// 	string msg="";
-		// 	setCommandModeStatus(commandBuffer,msg);
-		// }       
+        //backspace
+		else if(key==127){
+			string msg="";
+			setCommandModeStatus(commandBuffer,msg);
+		}       
 
         tcsetattr(STDIN_FILENO,TCSAFLUSH,&old);
     }
