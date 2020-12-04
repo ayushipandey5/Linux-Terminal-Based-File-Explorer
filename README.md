@@ -5,3 +5,6 @@ Use `make` command
 Use `./main` command
 ## To remove compiled files : 
 Use `make clean`
+
+## Snapshot of the project :
+![](images/snapshot.png)
